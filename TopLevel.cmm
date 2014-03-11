@@ -1,0 +1,35 @@
+
+LOCAL &params_dialog_file 
+LOCAL &read_write_cmm &verify_cmm &compare_cmm
+
+&params_dialog_file=".\GUI\TopLevel.dlg"
+&read_write_cmm=".\cmm\ReadWrite.cmm"
+&verify_cmm=".\cmm\Verify.cmm"
+&compare_cmm=".\cmm\Compare.cmm"
+
+DIALOG.VIEW &params_dialog_file
+STOP
+
+AREA.Create LISTOUT 60. 100.
+AREA.View LISTOUT
+AREA.Select LISTOUT
+AREA.Clear
+
+IF DIALOG.BOOLEAN(Option1)
+(
+	PRINT "Linked List Read and write checked "
+	do &read_write_cmm
+)
+ELSE IF DIALOG.BOOLEAN(Option2)
+(
+	PRINT "Linked List Verify checked "
+	do &verify_cmm
+)	
+ELSE IF DIALOG.BOOLEAN(Option3)
+(
+	PRINT "Linked List Compare checked "
+	do &compare_cmm
+)
+DIALOG.END
+
+ENDDO

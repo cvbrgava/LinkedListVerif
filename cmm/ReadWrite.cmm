@@ -1,0 +1,7 @@
+
+LOCAL &read_write_gui 
+
+&read_write_gui=".\GUI\ReadWrite.dlg"
+
+DIALOG.VIEW &read_write_gui
+STOP
