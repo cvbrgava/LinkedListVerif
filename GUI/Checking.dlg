@@ -1,0 +1,9 @@
+HEADER "Checking"
+
+POS 1. 1. 9.
+TEXT "Just checking"
+P.1:EDIT "Def" "" 
+
+P.2:CHOOSEBOX "NUMBER" ""
+P.3:CHOOSEBOX "There" ""
+

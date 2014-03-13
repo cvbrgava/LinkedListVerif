@@ -1,0 +1,16 @@
+HEADER "BDC Modem VI - VPE "
+
+POS 1. 1. 25. 6.
+BOX "VPE Linked Lists Verif Suite"
+POS 2. 3. 10. 1.
+TEXT "HEAD LINK ADDR" 
+POS 12. 3. 10. 1.
+ADDR: EDIT "" "" 
+POS 2. 5. 10. 1.
+CHOICE.READ: CHOOSEBOX "READ" ""
+POS 14. 5. 10. 1.
+CHOICE.WRITE: CHOOSEBOX "WRITE" "" 
+POS 27. 2. 
+BUTTON "OK" "Continue"
+POS 27. 4.
+BUTTON "Cancel" "Dialog.end"
