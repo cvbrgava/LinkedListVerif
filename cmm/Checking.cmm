@@ -1,5 +1,36 @@
-LOCAL &temp
+LOCAL &temp 
 
-&temp="0x"+"A000"
+&temp=0xA0000000
 
-PRINT "&temp"
+GOSUB Traverse &temp
+ENTRY &temp
+PRINT "NULL POINTER FOUND!! : &temp"
+&file_location="ref.dump"
+GOSUB GenDump &temp &file_location
+
+ENDDO
+
+Traverse:
+	LOCAL &next_addr &currnt_addr
+	ENTRY &currnt_addr
+	
+	&next_addr=DATA.LONG(SD:&currnt_addr+0x1C)
+	
+	WHILE &next_addr!=0x0
+	(
+		&currnt_addr=&next_addr
+		&next_addr=DATA.LONG(SD:&currnt_addr+0x1C)
+	)
+	
+	RETURN &currnt_addr
+	
+GenDump:
+	LOCAL &dump_addr
+	ENTRY &dump_addr &file_location
+	
+	data.save.ahb &file_location &dump_addr++0x1C /Word
+	
+	
+	
+	
+	
