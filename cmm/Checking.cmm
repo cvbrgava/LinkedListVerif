@@ -1,0 +1,5 @@
+LOCAL &temp
+
+&temp="0x"+"A000"
+
+PRINT "&temp"
