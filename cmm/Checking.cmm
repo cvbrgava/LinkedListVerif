@@ -1,12 +1,24 @@
 LOCAL &temp 
+LOCAL &LinkListAddr
+LOCAL &RefLinkAddr
 
-&temp=0xA0000000
+;GOSUB Traverse &temp
+;ENTRY &temp
+;PRINT "NULL POINTER FOUND!! : &temp"
+;&file_location="ref.dump"
+;GOSUB GenDump &temp &file_location
 
-GOSUB Traverse &temp
-ENTRY &temp
-PRINT "NULL POINTER FOUND!! : &temp"
-&file_location="ref.dump"
-GOSUB GenDump &temp &file_location
+area.clear
+area.view
+
+data.load.asciihexb data.dump D:0xA207EB60 
+
+data.load.asciihexb data.dump D:0xA207EBC0
+
+&LinkListAddr=D:0xA207EB60
+&RefLinkAddr=D:0xA207EBC0
+
+GOSUB Parser &LinkListAddr &LinkListAddr+0x1F &RefLinkAddr
 
 ENDDO
 
@@ -31,6 +43,117 @@ GenDump:
 	data.save.ahb &file_location &dump_addr++0x1C /Word
 	
 	
+Parser:
+	LOCAL &start &end &ref_start &diff &off &int_start
+	ENTRY &start &end &ref_start
 	
 	
+	&int_start=&start
 	
+	WHILE &int_start!=&end
+	(
+	&diff=&end-&int_start
+	data.compare &int_start++&diff &ref_start
+	
+	if found()
+		(
+		;print "Diff. found at address " TRACK.ADDRESS()
+		&off=TRACK.ADDRESS()-&int_start
+		GOSUB FieldPrint &off &int_start &ref_start
+		&ref_start=&ref_start+&off+1.
+		&int_start=&int_start+&off+1.
+		)
+	else 
+		return
+	)
+	
+FieldPrint:
+	LOCAL &off &init_start &ref_start &temp1 &temp
+	ENTRY &off &init_start &ref_start 
+	
+	if &off==0.||&off==1.
+	(
+		print "Mismatch: WORD0 XFER_LEN"
+	)
+	if &off==2.
+	(
+		print "Mismatch: WORD0 IRQ_EN / IRQ_NUM"
+	)
+	if &off==3.
+	(
+		print "Mismatch: WORD0 Start  /  DIR / LMEM Update / MEMP Update"
+	)
+	if &off==4.
+	(
+		print "Mismatch: WORD1 Modulo / Bias"
+	)
+	if &off==5.
+	(
+		print "Mismatch: WORD1 Reserved bits - Ignore"
+	)
+	if &off==6.
+	(
+		print "Mismatch: WORD1 LMEM Format"
+	)
+	if &off==7.
+	(
+		print "Mismatch: WORD1 MEMP Format"
+	)
+	if &off==8.||&off==9.
+	(
+		print "Mismatch: WORD2 VBUF_LEN"
+	)
+	if &off==10.||&off==11.
+	(
+		print "Mismatch: WORD2 LMEM Address - Ignore "
+	)
+	if &off==12.||&off==13.
+	(
+		print "Mismatch: WORD3 MP Address - Ignore"
+	)
+	if &off==14.
+	(
+		print "Mismatch: WORD3 INIT_BANK / MAX_BANK / MIN_BANK"
+	)
+	if &off==15.
+	(
+		print "Mismatch: WORD3 QSIZE / INIT_BANK"
+	)
+	if &off==16.||&off==17.
+	(
+		print "Mismatch: WORD4 START_VADDR"
+	)
+	if &off==18.||&off==19.
+	(
+		print "Mismatch: WORD4 INDEX_0"
+	)
+	if &off==20.||&off==21.
+	(
+		print "Mismatch: WORD5 M16_MODULO"
+	)
+	if &off==22.||&off==23.
+	(
+		print "Mismatch: WORD5 LINE_STRIDE1"
+	)
+	if &off==24.||&off==25.
+	(
+		print "Mismatch: WORD6 STRIDE_S"
+	)
+	if &off==26.||&off==27.
+	(
+		print "Mismatch: WORD6 LMEM METHOD"
+	)
+	if &off==28.||&off==29.
+	(
+		print "Mismatch: WORD7 NULL_POINTER Expected"
+	)
+	if &off==30.||&off==31.
+	(
+		print "Mismatch: WORD7 Reserved - Ignore"
+	)
+	&temp=&init_start+&off
+	&temp=DATA.BYTE(&temp)		
+	&temp1=&ref_start+&off
+	&temp1=DATA.BYTE(&temp1)		
+	print "EXPECTED: &temp FOUND: &temp1 "
+	RETURN
