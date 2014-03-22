@@ -1,11 +1,12 @@
 
-LOCAL &params_dialog_file 
+LOCAL &params_dialog_file &parent_folder
 LOCAL &read_write_cmm &verify_cmm &compare_cmm
 
 &params_dialog_file=".\GUI\TopLevel.dlg"
 &read_write_cmm=".\cmm\ReadWrite.cmm"
 &verify_cmm=".\cmm\Verify.cmm"
-&compare_cmm=".\cmm\Compare.cmm"
+&compare_cmm=".\cmm\Checking.cmm"
+&parent_folder=os.ppd()
 
 DIALOG.VIEW &params_dialog_file
 STOP
@@ -15,20 +16,25 @@ AREA.View LISTOUT
 AREA.Select LISTOUT
 AREA.Clear
 
-IF DIALOG.BOOLEAN(Option1)
+IF DIALOG.BOOLEAN(Top.Option1)
 (
 	PRINT "Linked List Read and write checked "
-	do &read_write_cmm
+	do &read_write_cmm &parent_folder
 )
-ELSE IF DIALOG.BOOLEAN(Option2)
+ELSE IF DIALOG.BOOLEAN(Top.Option2)
 (
 	PRINT "Linked List Verify checked "
-	do &verify_cmm
+	do &verify_cmm &parent_folder
 )	
-ELSE IF DIALOG.BOOLEAN(Option3)
+ELSE IF DIALOG.BOOLEAN(Top.Option3)
 (
-	PRINT "Linked List Compare checked "
-	do &compare_cmm
+	PRINT "Dump Reference Linked List Selected"
+	do &compare_cmm 0. &parent_folder
+)
+ELSE IF DIALOG.BOOLEAN(Top.Option4)
+(
+	PRINT "Compare Linked Lists Selected"
+	do &compare_cmm 1. &parent_folder
 )
 DIALOG.END
 

@@ -1,37 +1,53 @@
 LOCAL &temp 
 LOCAL &LinkListAddr
 LOCAL &RefLinkAddr
+LOCAL &choice
+LOCAL &filename
+LOCAL &parent_folder
 
-;GOSUB Traverse &temp
-;ENTRY &temp
-;PRINT "NULL POINTER FOUND!! : &temp"
-;&file_location="ref.dump"
-;GOSUB GenDump &temp &file_location
+ENTRY &choice &parent_folder
+IF &choice==0.
+(
+	Dialog.view "&parent_folder\GUI\GenDump.dlg"
+	STOP
+	&LinkListAddr=DIALOG.STRING(ADDR)
+	&filename=DIALOG.STRING(FILE)
+	GOSUB Traverse &LinkListAddr
+	ENTRY &LinkListAddr
+	Print "Last link found at : &LinkListAddr "
+	GOSUB GenDump &LinkListAddr &parent_folder\data\&filename
+	Print "Last link dumped into : &parent_folder\data\&filename"
+)
+ELSE
+(
+	Dialog.view "&parent_folder\GUI\Compare.dlg"
+	STOP 
+	&LinkListAddr=DIALOG.STRING(ADDR)
+	&filename=DIALOG.STRING(FILE)
+	&RefLinkAddr=DIALOG.STRING(REF)
+	GOSUB Traverse &LinkListAddr
+	ENTRY &LinkListAddr
+	data.load.asciihexb &parent_folder\data\&filename D:&RefLinkAddr
+	area.clear
+	print "Reference data loaded..."
+	area.view
+	GOSUB Parser D:&LinkListAddr D:&LinkListAddr+0x1F D:&RefLinkAddr
 
-area.clear
-area.view
-
-data.load.asciihexb data.dump D:0xA207EB60 
-
-data.load.asciihexb data.dump D:0xA207EBC0
-
-&LinkListAddr=D:0xA207EB60
-&RefLinkAddr=D:0xA207EBC0
-
-GOSUB Parser &LinkListAddr &LinkListAddr+0x1F &RefLinkAddr
+)
 
 ENDDO
+
 
 Traverse:
 	LOCAL &next_addr &currnt_addr
 	ENTRY &currnt_addr
 	
-	&next_addr=DATA.LONG(SD:&currnt_addr+0x1C)
+	&next_addr=DATA.LONG(D:&currnt_addr+0x1C)
 	
 	WHILE &next_addr!=0x0
 	(
 		&currnt_addr=&next_addr
-		&next_addr=DATA.LONG(SD:&currnt_addr+0x1C)
+		&next_addr=DATA.LONG(D:&currnt_addr+0x1C)
 	)
 	
 	RETURN &currnt_addr
@@ -40,7 +56,8 @@ GenDump:
 	LOCAL &dump_addr
 	ENTRY &dump_addr &file_location
 	
-	data.save.ahb &file_location &dump_addr++0x1C /Word
+	data.save.ahb &file_location D:&dump_addr++0x1F /Word
+	Return
 	
 	
 Parser:
@@ -57,9 +74,10 @@ Parser:
 	
 	if found()
 		(
-		;print "Diff. found at address " TRACK.ADDRESS()
+		print "Diff. found at address " TRACK.ADDRESS()
 		&off=TRACK.ADDRESS()-&int_start
-		GOSUB FieldPrint &off &int_start &ref_start
+		;print &int_start 
+		GOSUB FieldPrint TRACK.ADDRESS()-&start &int_start &ref_start
 		&ref_start=&ref_start+&off+1.
 		&int_start=&int_start+&off+1.
 		)
@@ -70,90 +88,89 @@ Parser:
 FieldPrint:
 	LOCAL &off &init_start &ref_start &temp1 &temp
 	ENTRY &off &init_start &ref_start 
-	
 	if &off==0.||&off==1.
 	(
 		print "Mismatch: WORD0 XFER_LEN"
 	)
-	if &off==2.
+	else if &off==2.
 	(
 		print "Mismatch: WORD0 IRQ_EN / IRQ_NUM"
 	)
-	if &off==3.
+	else if &off==3.
 	(
 		print "Mismatch: WORD0 Start  /  DIR / LMEM Update / MEMP Update"
 	)
-	if &off==4.
+	else if &off==4.
 	(
 		print "Mismatch: WORD1 Modulo / Bias"
 	)
-	if &off==5.
+	else if &off==5.
 	(
 		print "Mismatch: WORD1 Reserved bits - Ignore"
 	)
-	if &off==6.
+	else if &off==6.
 	(
 		print "Mismatch: WORD1 LMEM Format"
 	)
-	if &off==7.
+	else if &off==7.
 	(
 		print "Mismatch: WORD1 MEMP Format"
 	)
-	if &off==8.||&off==9.
+	else if &off==8.||&off==9.
 	(
 		print "Mismatch: WORD2 VBUF_LEN"
 	)
-	if &off==10.||&off==11.
+	else if &off==10.||&off==11.
 	(
 		print "Mismatch: WORD2 LMEM Address - Ignore "
 	)
-	if &off==12.||&off==13.
+	else if &off==12.||&off==13.
 	(
 		print "Mismatch: WORD3 MP Address - Ignore"
 	)
-	if &off==14.
+	else if &off==14.
 	(
 		print "Mismatch: WORD3 INIT_BANK / MAX_BANK / MIN_BANK"
 	)
-	if &off==15.
+	else if &off==15.
 	(
 		print "Mismatch: WORD3 QSIZE / INIT_BANK"
 	)
-	if &off==16.||&off==17.
+	else if &off==16.||&off==17.
 	(
 		print "Mismatch: WORD4 START_VADDR"
 	)
-	if &off==18.||&off==19.
+	else if &off==18.||&off==19.
 	(
 		print "Mismatch: WORD4 INDEX_0"
 	)
-	if &off==20.||&off==21.
+	else if &off==20.||&off==21.
 	(
 		print "Mismatch: WORD5 M16_MODULO"
 	)
-	if &off==22.||&off==23.
+	else if &off==22.||&off==23.
 	(
 		print "Mismatch: WORD5 LINE_STRIDE1"
 	)
-	if &off==24.||&off==25.
+	else if &off==24.||&off==25.
 	(
 		print "Mismatch: WORD6 STRIDE_S"
 	)
-	if &off==26.||&off==27.
+	else if &off==26.||&off==27.
 	(
 		print "Mismatch: WORD6 LMEM METHOD"
 	)
-	if &off==28.||&off==29.
+	else if &off==28.||&off==29.
 	(
 		print "Mismatch: WORD7 NULL_POINTER Expected"
 	)
-	if &off==30.||&off==31.
+	else if &off==30.||&off==31.
 	(
 		print "Mismatch: WORD7 Reserved - Ignore"
 	)
 	&temp=&init_start+&off
-	&temp=DATA.BYTE(&temp)		
+	&temp=DATA.BYTE(D:&temp)		
 	&temp1=&ref_start+&off
-	&temp1=DATA.BYTE(&temp1)		
+	&temp1=DATA.BYTE(D:&temp1)		
 	print "EXPECTED: &temp FOUND: &temp1 "
 	RETURN

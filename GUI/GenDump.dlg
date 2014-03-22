@@ -1,20 +1,16 @@
 HEADER "BDC Modem VI - VPE "
 
-POS 1. 1. 25. 9.
-BOX "Compare Link Lists"
+POS 1. 1. 25. 6.
+BOX "Generate Reference Dump"
 POS 2. 3. 10. 1.
 TEXT "HEAD LINK ADDR" 
 POS 12. 3. 10. 1.
 ADDR: EDIT "" "" 
 POS 2. 5. 10. 1.
-TEXT "FILE LOCATION" 
+TEXT "FILE NAME" 
 POS 12. 5. 10. 1. 
 FILE: EDIT "" ""
-POS 2. 7. 10. 1.
-TEXT "REF LOAD ADDR" 
-POS 12. 7. 10. 1. 
-REF: EDIT "" ""
-POS 27. 3.
+POS 27. 2.
 BUTTON "OK" "Continue"
-POS 27. 5.
+POS 27. 4.
 BUTTON "Cancel" "Dialog.end"

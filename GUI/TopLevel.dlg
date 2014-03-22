@@ -1,15 +1,16 @@
     HEADER "BDC Modem VI"
   
-	POS 1. 1. 15. 7.
+	POS 1. 1. 27. 7.
 	BOX "VPE Linked Lists Verif Suite"
 	
-	POS 2. 3. 10. 1.
-	Option1: CHECKBOX "Read/Write" "" 
-	Option2: CHECKBOX "Verify" ""
-	Option3: CHECKBOX "Compare" ""
+	POS 2. 3. 25. 1.
+	Top.Option1: CHOOSEBOX "Read/Write" "" 
+	Top.Option2: CHOOSEBOX "Verify" ""
+	Top.Option3: CHOOSEBOX "Generate Reference Link List" ""
+	Top.Option4: CHOOSEBOX "Compare" ""
   
-    POS 20. 3. 9.
+    POS 30. 3. 9.
     DEFBUTTON "OK" "continue"
   
-    POS 20. 5. 9.
+    POS 30. 5. 9.
     BUTTON "Cancel" "dialog.end"
