@@ -40,8 +40,11 @@ LOCAL &prelim_dialog_file
 LOCAL &temp
 LOCAL &WORD0 &WORD1 &WORD2 &WORD3 &WORD4 &WORD5 &WORD6 &WORD7
 LOCAL &REDRAW
+LOCAL &parent_folder
+
+ENTRY &parent_folder
 &REDRAW=0.
-&prelim_dialog_file="../GUI/ReadWritePrelim.dlg"
+&prelim_dialog_file="&parent_folder\GUI\ReadWritePrelim.dlg"
 &LINKNO=0.
 GOSUB Prelim
 
@@ -72,56 +75,63 @@ Write:
 		
 	)
 	&REDRAW=0.
-	&dialog_file="..\Temp\GUI_Menu.dlg"
+	&dialog_file="&parent_folder\Temp\GUI_Menu.dlg"
 	OPEN #1 &dialog_file /create
-	WRITE #1 "HEADER ""BDC Modem VI - VPE """
-	WRITE #1 ""
-	WRITE #1 "POS 1. 1. 60. 30."
-	WRITE #1 "BOX ""VPE Linked Lists Verif Suite"""
-	WRITE #1 ""
-	WRITE #1 "POS 2. 2. 15. 4."
-	WRITE #1 "BOX ""START"""
-	WRITE #1 "POS 3. 3. 13. 1."
-	WRITE #1 "Start.0: CHOOSEBOX ""Wait"" """""
-	WRITE #1 "Start.1: CHOOSEBOX ""Start Transfer"" """""
-	WRITE #1 ""
-	WRITE #1 "POS 18. 2. 15. 4."
-	WRITE #1 "BOX ""XFER_DIR"""
-	WRITE #1 "POS 19. 3. 13. 1."
-	WRITE #1 "Dir.0: CHOOSEBOX ""MEMPOOL to LMEM"" """""
-	WRITE #1 "Dir.1: CHOOSEBOX ""LMEM to MEMPOOL"" """""
-	WRITE #1 ""
-	WRITE #1 "POS 2. 6. 15. 4."
-	WRITE #1 "BOX ""LMEM_INDEX_UPDATE"""
-	WRITE #1 "POS 3. 7. 13. 1."
-	WRITE #1 "LMEM.0: CHOOSEBOX ""No Update"" """""
-	WRITE #1 "LMEM.1: CHOOSEBOX ""Update on EOT"" """""
-	WRITE #1 ""
-	WRITE #1 "POS 18. 6. 15. 4."
-	WRITE #1 "BOX ""MP_VADDR_UPDATE"""
-	WRITE #1 "POS 19. 7. 13. 1."
-	WRITE #1 "MEMP.0: CHOOSEBOX ""No Update"" """""
-	WRITE #1 "MEMP.1: CHOOSEBOX ""Update on EOT"" """""
-	WRITE #1 ""
-	WRITE #1 "POS 2. 10. 15. 4."
-	WRITE #1 "BOX ""Interrupt"""
-	WRITE #1 "POS 3. 11. 13. 1."
-	WRITE #1 "Int.1: CHOOSEBOX ""ENABLE"" """""
-	WRITE #1 "Int.0: CHOOSEBOX ""DISABLE"" """""
-	WRITE #1 ""
-	WRITE #1 "POS 18. 10. 15. 8."
-	WRITE #1 "BOX ""Interrupt No"""
-	WRITE #1 "POS 19. 12. 3. 1."
-	WRITE #1 "IntNo.0: CHOOSEBOX ""0"" """""
-	WRITE #1 "IntNo.1: CHOOSEBOX ""1"" """""
-	WRITE #1 "IntNo.2: CHOOSEBOX ""2"" """""
-	WRITE #1 "IntNo.3: CHOOSEBOX ""3"" """""
-	WRITE #1 "POS 25. 12. 3. 1."
-	WRITE #1 "IntNo.4: CHOOSEBOX ""4"" """""
-	WRITE #1 "IntNo.5: CHOOSEBOX ""5"" """""
-	WRITE #1 "IntNo.6: CHOOSEBOX ""6"" """""
-	WRITE #1 "IntNo.7: CHOOSEBOX ""7"" """""
-	WRITE #1 ""
+	WRITE #1"    HEADER ""BDC Modem VI - VPE """
+	WRITE #1"  "
+	WRITE #1"	POS 1. 1. 60. 30."
+	WRITE #1"	BOX ""VPE Linked Lists Verif Suite"""
+	WRITE #1"	"
+	WRITE #1"	POS 2. 2. 15. 4."
+	WRITE #1"	BOX ""START"""
+	WRITE #1"	POS 3. 3. 2. 2."
+	WRITE #1"	Start:	LISTBOX ""0,1"" """""
+	WRITE #1"	POS 6. 3. 10. 1. "
+	WRITE #1"	TEXT ""Wait"""
+	WRITE #1"	POS 6. 4. 10. 1. "
+	WRITE #1"	TEXT ""Start Transfer"""
+	WRITE #1"	"
+	WRITE #1"	"
+	WRITE #1"	POS 18. 2. 15. 4."
+	WRITE #1"	BOX ""XFER_DIR"""
+	WRITE #1"	POS 19. 3. 2. 2."
+	WRITE #1"	Dir:	LISTBOX ""0,1"" """""
+	WRITE #1"	POS 22. 3. 10. 1. "
+	WRITE #1"	TEXT ""MEMP to LMEM"""
+	WRITE #1"	POS 22. 4. 10. 1. "
+	WRITE #1"	TEXT ""LMEM to MEMP"""
+	WRITE #1"	"
+	WRITE #1"	POS 2. 6. 15. 4."
+	WRITE #1"	BOX ""LMEM_INDEX_UPDATE"""
+	WRITE #1"	POS 3. 7. 2. 2."
+	WRITE #1"	LMEM:	LISTBOX ""0,1"" """""
+	WRITE #1"	POS 6. 7. 10. 1. "
+	WRITE #1"	TEXT ""No Updt"""
+	WRITE #1"	POS 6. 8. 10. 1. "
+	WRITE #1"	TEXT ""Updt on EOT"""
+	WRITE #1"	"
+	WRITE #1"	POS 18. 6. 15. 4."
+	WRITE #1"	BOX ""MP_VADDR_UPDATE"""
+	WRITE #1"	POS 19. 7. 2. 2."
+	WRITE #1"	MEMP:	LISTBOX ""0,1"" """""
+	WRITE #1"	POS 22. 7. 10. 1. "
+	WRITE #1"	TEXT ""No Updt"""
+	WRITE #1"	POS 22. 8. 10. 1. "
+	WRITE #1"	TEXT ""Updt on EOT"""
+	WRITE #1"	"
+	WRITE #1"	POS 2. 10. 15. 4."
+	WRITE #1"	BOX ""Interrupt"""
+	WRITE #1"	POS 3. 11. 2. 2."
+	WRITE #1"	Int:	LISTBOX ""0,1"" """""
+	WRITE #1"	POS 6. 11. 10. 1. "
+	WRITE #1"	TEXT ""ENABLE"""
+	WRITE #1"	POS 6. 12. 10. 1. "
+	WRITE #1"	TEXT ""DISABLE"""
+	WRITE #1"	"
+	WRITE #1"	POS 18. 10. 15. 8."
+	WRITE #1"	BOX ""Interrupt No"""
+	WRITE #1"	POS 23. 11. 3. 6."
+	WRITE #1"	IntNo:	LISTBOX ""0,1,2,3,4,5,6,7"" """""
 	WRITE #1 "POS 2. 14. 15. 4."
 	WRITE #1 "BOX ""XFER_LEN"""
 	WRITE #1 "POS 3. 15. 13. 1."
@@ -263,14 +273,27 @@ Write:
 ;	DIALOG.DISABLE POINTER_ADDRESS.CRNT
 ;	DIALOG.DISABLE POINTER_ADDRESS.HEAD
 ;	DIALOG.DISABLE POINTER_ADDRESS.PREV
+
+	DIALOG.SET Start &Start
+	DIALOG.SET Dir &Dir
+	DIALOG.SET Int &Int
+	DIALOG.SET IntNo &IntNo
+	DIALOG.SET LMEM &LMEM
+	DIALOG.SET MEMP &MEMP
 	
 	DIALOG.DISABLE READ.NEXT 
 	DIALOG.DISABLE READ.CANCEL 
 	DIALOG.DISABLE READ.PREV
+	
 	STOP
 	
 UnsetParams:
-	
+	&Start="1"
+	&Dir="1"
+	&Int="1"
+	&IntNo="0"
+	&LMEM="0"
+	&MEMP="0"
 	&NumSmpl=""
 	&Format_MEMP=""
 	&Format_LMEM=""
@@ -334,115 +357,25 @@ NextWrite:
 	
 	
 SetParams:
-	IF DIALOG.BOOLEAN(Start.0)
-	(
-		&Start=0x0
-	)
-	ELSE IF DIALOG.BOOLEAN(Start.1)
-	(
-		&Start=0x1
-	)
-	ELSE 
-	(
-		PRINT "Invalid Entry : START"
-		&REDRAW=&REDRAW+1.
-	)
 	
-	IF DIALOG.BOOLEAN(Dir.0)
-	(
-		&Dir=0x0
-		PRINT "&Dir"
-	)
-	ELSE IF DIALOG.BOOLEAN(Dir.1)
-	(
-		&Dir=0x1
-	)
-	ELSE 
-	(
-		PRINT "Invalid Entry : XFER_DIR"
-		&REDRAW=&REDRAW+1.
-	)
-	
-	IF DIALOG.BOOLEAN(LMEM.0)
-	(
-		&LMEM=0x0
-	)
-	ELSE IF DIALOG.BOOLEAN(LMEM.1)
-	(
-		&LMEM=0x1
-	)
-	ELSE 
-	(
-		PRINT "Invalid Entry : LMEM_INDEX_UPDATE"
-		&REDRAW=&REDRAW+1.
-	)
-	
-	IF DIALOG.BOOLEAN(MEMP.0)
-	(
-		&MEMP=0x0
-	)
-	ELSE IF DIALOG.BOOLEAN(MEMP.1)
-	(
-		&MEMP=0x1
-	)
-	ELSE 
-	(
-		PRINT "Invalid Entry : MEMP_VADDR_UPDATE"
-		&REDRAW=&REDRAW+1.
-	)
-	
-	IF DIALOG.BOOLEAN(Int.0)
-	(
-		&Int=0x0
-	)
-	ELSE IF DIALOG.BOOLEAN(Int.1)
-	(
-		&Int=0x1
-	)
-	ELSE 
-	(
-		PRINT "Invalid Entry : Int"
-		&REDRAW=&REDRAW+1.
-	)
-	
-	IF DIALOG.BOOLEAN(IntNo.0)
-	(
-		&IntNo=0x0
-	)
-	ELSE IF DIALOG.BOOLEAN(IntNo.1)
-	(
-		&IntNo=0x1
-	)
-	ELSE IF DIALOG.BOOLEAN(IntNo.2)
-	(
-		&IntNo=0x2
-	)
-	ELSE IF DIALOG.BOOLEAN(IntNo.3)
-	(
-		&IntNo=0x3
-	)
-	ELSE IF DIALOG.BOOLEAN(IntNo.4)
-	(
-		&IntNo=0x4
-	)
-	ELSE IF DIALOG.BOOLEAN(IntNo.5)
-	(
-		&IntNo=0x5
-	)
-	ELSE IF DIALOG.BOOLEAN(IntNo.6)
-	(
-		&IntNo=0x6
-	)
-	ELSE IF DIALOG.BOOLEAN(IntNo.7)
-	(
-		&IntNo=0x7
-	)
-	ELSE 
-	(
-		PRINT "Invalid Entry : IntNo"
-		&REDRAW=&REDRAW+1.
-	)
-	
+	GOSUB DialogRead Start 
+	ENTRY &Start
+
+	GOSUB DialogRead Dir
+	ENTRY &Dir
+
+	GOSUB DialogRead LMEM
+	ENTRY &LMEM
+
+	GOSUB DialogRead MEMP
+	ENTRY &MEMP
+
+	GOSUB DialogRead Int
+	ENTRY &Int
+
+	GOSUB DialogRead IntNo
+	ENTRY &IntNo
+
 	GOSUB DialogRead NumSmpl
 	ENTRY &NumSmpl
 	
@@ -572,14 +505,14 @@ MemWrite:
 
 MemRead:
 	&temp="0x"+"&POINTER_ADDRESS_CRNT"
-	&WORD0=DATA.LONG(SD:&temp)
-	&WORD1=DATA.LONG(SD:&temp+0x4)
-	&WORD2=DATA.LONG(SD:&temp+0x8)
-	&WORD3=DATA.LONG(SD:&temp+0xC)
-	&WORD4=DATA.LONG(SD:&temp+0x10)
-	&WORD5=DATA.LONG(SD:&temp+0x14)
-	&WORD6=DATA.LONG(SD:&temp+0x18)
-	&WORD7=DATA.LONG(SD:&temp+0x1C)
+	&WORD0=DATA.LONG(D:&temp)
+	&WORD1=DATA.LONG(D:&temp+0x4)
+	&WORD2=DATA.LONG(D:&temp+0x8)
+	&WORD3=DATA.LONG(D:&temp+0xC)
+	&WORD4=DATA.LONG(D:&temp+0x10)
+	&WORD5=DATA.LONG(D:&temp+0x14)
+	&WORD6=DATA.LONG(D:&temp+0x18)
+	&WORD7=DATA.LONG(D:&temp+0x1C)
 	Return
 	
 ParamGen:
@@ -627,56 +560,63 @@ Read:
 	GOSUB MemRead
 	GOSUB ParamGen
 
-	&dialog_file="..\Temp\GUI_Menu.dlg"
+	&dialog_file="&parent_folder\Temp\GUI_Menu.dlg"
 	OPEN #1 &dialog_file /create
-	WRITE #1 "HEADER ""BDC Modem VI - VPE """
-	WRITE #1 ""
-	WRITE #1 "POS 1. 1. 60. 30."
-	WRITE #1 "BOX ""VPE Linked Lists Verif Suite"""
-	WRITE #1 ""
-	WRITE #1 "POS 2. 2. 15. 4."
-	WRITE #1 "BOX ""START"""
-	WRITE #1 "POS 3. 3. 13. 1."
-	WRITE #1 "Start.0: CHOOSEBOX ""Wait"" """""
-	WRITE #1 "Start.1: CHOOSEBOX ""Start Transfer"" """""
-	WRITE #1 ""
-	WRITE #1 "POS 18. 2. 15. 4."
-	WRITE #1 "BOX ""XFER_DIR"""
-	WRITE #1 "POS 19. 3. 13. 1."
-	WRITE #1 "Dir.0: CHOOSEBOX ""MEMPOOL to LMEM"" """""
-	WRITE #1 "Dir.1: CHOOSEBOX ""LMEM to MEMPOOL"" """""
-	WRITE #1 ""
-	WRITE #1 "POS 2. 6. 15. 4."
-	WRITE #1 "BOX ""LMEM_INDEX_UPDATE"""
-	WRITE #1 "POS 3. 7. 13. 1."
-	WRITE #1 "LMEM.0: CHOOSEBOX ""No Update"" """""
-	WRITE #1 "LMEM.1: CHOOSEBOX ""Update on EOT"" """""
-	WRITE #1 ""
-	WRITE #1 "POS 18. 6. 15. 4."
-	WRITE #1 "BOX ""MP_VADDR_UPDATE"""
-	WRITE #1 "POS 19. 7. 13. 1."
-	WRITE #1 "MEMP.0: CHOOSEBOX ""No Update"" """""
-	WRITE #1 "MEMP.1: CHOOSEBOX ""Update on EOT"" """""
-	WRITE #1 ""
-	WRITE #1 "POS 2. 10. 15. 4."
-	WRITE #1 "BOX ""Interrupt"""
-	WRITE #1 "POS 3. 11. 13. 1."
-	WRITE #1 "Int.1: CHOOSEBOX ""ENABLE"" """""
-	WRITE #1 "Int.0: CHOOSEBOX ""DISABLE"" """""
-	WRITE #1 ""
-	WRITE #1 "POS 18. 10. 15. 8."
-	WRITE #1 "BOX ""Interrupt No"""
-	WRITE #1 "POS 19. 12. 3. 1."
-	WRITE #1 "IntNo.0: CHOOSEBOX ""0"" """""
-	WRITE #1 "IntNo.1: CHOOSEBOX ""1"" """""
-	WRITE #1 "IntNo.2: CHOOSEBOX ""2"" """""
-	WRITE #1 "IntNo.3: CHOOSEBOX ""3"" """""
-	WRITE #1 "POS 25. 12. 3. 1."
-	WRITE #1 "IntNo.4: CHOOSEBOX ""4"" """""
-	WRITE #1 "IntNo.5: CHOOSEBOX ""5"" """""
-	WRITE #1 "IntNo.6: CHOOSEBOX ""6"" """""
-	WRITE #1 "IntNo.7: CHOOSEBOX ""7"" """""
-	WRITE #1 ""
+	WRITE #1"    HEADER ""BDC Modem VI - VPE """
+	WRITE #1"  "
+	WRITE #1"	POS 1. 1. 60. 30."
+	WRITE #1"	BOX ""VPE Linked Lists Verif Suite"""
+	WRITE #1"	"
+	WRITE #1"	POS 2. 2. 15. 4."
+	WRITE #1"	BOX ""START"""
+	WRITE #1"	POS 3. 3. 2. 2."
+	WRITE #1"	Start:	LISTBOX ""0,1"" """""
+	WRITE #1"	POS 6. 3. 10. 1. "
+	WRITE #1"	TEXT ""Wait"""
+	WRITE #1"	POS 6. 4. 10. 1. "
+	WRITE #1"	TEXT ""Start Transfer"""
+	WRITE #1"	"
+	WRITE #1"	"
+	WRITE #1"	POS 18. 2. 15. 4."
+	WRITE #1"	BOX ""XFER_DIR"""
+	WRITE #1"	POS 19. 3. 2. 2."
+	WRITE #1"	Dir:	LISTBOX ""0,1"" """""
+	WRITE #1"	POS 22. 3. 10. 1. "
+	WRITE #1"	TEXT ""MEMP to LMEM"""
+	WRITE #1"	POS 22. 4. 10. 1. "
+	WRITE #1"	TEXT ""LMEM to MEMP"""
+	WRITE #1"	"
+	WRITE #1"	POS 2. 6. 15. 4."
+	WRITE #1"	BOX ""LMEM_INDEX_UPDATE"""
+	WRITE #1"	POS 3. 7. 2. 2."
+	WRITE #1"	LMEM:	LISTBOX ""0,1"" """""
+	WRITE #1"	POS 6. 7. 10. 1. "
+	WRITE #1"	TEXT ""No Updt"""
+	WRITE #1"	POS 6. 8. 10. 1. "
+	WRITE #1"	TEXT ""Updt on EOT"""
+	WRITE #1"	"
+	WRITE #1"	POS 18. 6. 15. 4."
+	WRITE #1"	BOX ""MP_VADDR_UPDATE"""
+	WRITE #1"	POS 19. 7. 2. 2."
+	WRITE #1"	MEMP:	LISTBOX ""0,1"" """""
+	WRITE #1"	POS 22. 7. 10. 1. "
+	WRITE #1"	TEXT ""No Updt"""
+	WRITE #1"	POS 22. 8. 10. 1. "
+	WRITE #1"	TEXT ""Updt on EOT"""
+	WRITE #1"	"
+	WRITE #1"	POS 2. 10. 15. 4."
+	WRITE #1"	BOX ""Interrupt"""
+	WRITE #1"	POS 3. 11. 2. 2."
+	WRITE #1"	Int:	LISTBOX ""0,1"" """""
+	WRITE #1"	POS 6. 11. 10. 1. "
+	WRITE #1"	TEXT ""ENABLE"""
+	WRITE #1"	POS 6. 12. 10. 1. "
+	WRITE #1"	TEXT ""DISABLE"""
+	WRITE #1"	"
+	WRITE #1"	POS 18. 10. 15. 8."
+	WRITE #1"	BOX ""Interrupt No"""
+	WRITE #1"	POS 23. 11. 3. 6."
+	WRITE #1"	IntNo:	LISTBOX ""0,1,2,3,4,5,6,7"" """""
 	WRITE #1 "POS 2. 14. 15. 4."
 	WRITE #1 "BOX ""XFER_LEN"""
 	WRITE #1 "POS 3. 15. 13. 1."
@@ -815,6 +755,13 @@ Read:
 	DIALOG.SET POINTER_ADDRESS.CRNT FORMAT.HEX(8,&POINTER_ADDRESS_HEAD)
 	)
 
+	DIALOG.SET Start &Start
+	DIALOG.SET Dir &Dir
+	DIALOG.SET Int &Int
+	DIALOG.SET IntNo &IntNo
+	DIALOG.SET LMEM &LMEM
+	DIALOG.SET MEMP &MEMP
+	
 	DIALOG.DISABLE	NumSmpl
 	DIALOG.DISABLE	Format.MEMP
 	DIALOG.DISABLE	Format.LMEM

@@ -5,46 +5,55 @@
 	
 	POS 2. 2. 15. 4.
 	BOX "START"
-	POS 3. 3. 13. 1.
-	Start.0: CHOOSEBOX "Wait" "" 
-	Start.1: CHOOSEBOX "Start Transfer" "" 
+	POS 3. 3. 2. 2.
+	Start:	LISTBOX "0,1" ""
+	POS 6. 3. 10. 1. 
+	TEXT "Wait"
+	POS 6. 4. 10. 1. 
+	TEXT "Start Transfer"
+	
 	
 	POS 18. 2. 15. 4.
 	BOX "XFER_DIR"
-	POS 19. 3. 13. 1.
-	Dir.0: CHOOSEBOX "MEMPOOL to LMEM" "" 
-	Dir.1: CHOOSEBOX "LMEM to MEMPOOL" "" 
+	POS 19. 3. 2. 2.
+	Dir:	LISTBOX "0,1" ""
+	POS 22. 3. 10. 1. 
+	TEXT "MEMP to LMEM"
+	POS 22. 4. 10. 1. 
+	TEXT "LMEM to MEMP"
 	
 	POS 2. 6. 15. 4.
 	BOX "LMEM_INDEX_UPDATE"
-	POS 3. 7. 13. 1.
-	LMEM.0: CHOOSEBOX "No Update" "" 
-	LMEM.1: CHOOSEBOX "Update on EOT" "" 
+	POS 3. 7. 2. 2.
+	LMEM:	LISTBOX "0,1" ""
+	POS 6. 7. 10. 1. 
+	TEXT "No Updt"
+	POS 6. 8. 10. 1. 
+	TEXT "Updt on EOT"
 	
 	POS 18. 6. 15. 4.
 	BOX "MP_VADDR_UPDATE"
-	POS 19. 7. 13. 1.
-	MEMP.0: CHOOSEBOX "No Update" "" 
-	MEMP.1: CHOOSEBOX "Update on EOT" "" 
+	POS 19. 7. 2. 2.
+	MEMP:	LISTBOX "0,1" ""
+	POS 22. 7. 10. 1. 
+	TEXT "No Updt"
+	POS 22. 8. 10. 1. 
+	TEXT "Updt on EOT"
 	
 	POS 2. 10. 15. 4.
 	BOX "Interrupt"
-	POS 3. 11. 13. 1.
-	Int.1: CHOOSEBOX "ENABLE" "" 
-	Int.0: CHOOSEBOX "DISABLE" "" 
+	POS 3. 11. 2. 2.
+	Int:	LISTBOX "0,1" ""
+	POS 6. 11. 10. 1. 
+	TEXT "ENABLE"
+	POS 6. 12. 10. 1. 
+	TEXT "DISABLE"
 	
 	POS 18. 10. 15. 8.
 	BOX "Interrupt No"
-	POS 19. 12. 3. 1.
-	IntNo.0: CHOOSEBOX "0" "" 
-	IntNo.1: CHOOSEBOX "1" "" 
-	IntNo.2: CHOOSEBOX "2" "" 
-	IntNo.3: CHOOSEBOX "3" "" 
+	POS 23. 11. 3. 6.
+	IntNo:	LISTBOX "0,1,2,3,4,5,6,7" ""
 	POS 25. 12. 3. 1.
-	IntNo.4: CHOOSEBOX "4" "" 
-	IntNo.5: CHOOSEBOX "5" "" 
-	IntNo.6: CHOOSEBOX "6" "" 
-	IntNo.7: CHOOSEBOX "7" "" 
 	
 	POS 2. 14. 15. 4.
 	BOX "XFER_LEN"
