@@ -56,7 +56,7 @@ GenDump:
 	LOCAL &dump_addr
 	ENTRY &dump_addr &file_location
 	
-	data.save.ahb &file_location D:&dump_addr++0x1F /Word
+	data.save.ahb &file_location D:&dump_addr++0x1F 
 	Return
 	
 	
